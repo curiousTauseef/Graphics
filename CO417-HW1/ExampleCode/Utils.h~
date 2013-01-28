@@ -1,8 +1,0 @@
-#ifndef __UTILS__H__
-#define __UTILS__H__
-
-void CreateAndSavePFM(const char *image_out);
-void LoadAndSavePPM(const char *image_in, const char *image_out);
-void LoadAndSavePFM(const char *image_in, const char *image_out);
-
-#endif
