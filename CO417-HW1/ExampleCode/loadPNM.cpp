@@ -1,7 +1,8 @@
+#include <iostream>
+#include <stdio.h>
 #include "loadPNM.h"
 
-unsigned char *
-loadPNM( const char *filename,
+unsigned char * loadPNM( const char *filename,
 	 unsigned int& width, unsigned int &height,
 	 unsigned int &numComponents )
 {

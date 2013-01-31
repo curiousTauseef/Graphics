@@ -6,6 +6,7 @@ Year: 2013
 #include <stdlib.h>
 #include <math.h>
 #include "loadPNM.h"
+#include "Assignment.h"
 
 //#define PI 3.14159265358979323
 #define uint unsigned int
@@ -163,7 +164,7 @@ int main(int argc, char** argv)
 {
 
           
-  cerr<<"main invoked: arguments - <image_out (.pfm)> "<<endl;
+/*  cerr<<"main invoked: arguments - <image_out (.pfm)> "<<endl;
   cerr<<"main invoked: arguments - <image_in (.ppm)> <image_out (.ppm)> "<<endl;
   
   int count = argc;
@@ -185,10 +186,10 @@ int main(int argc, char** argv)
 //  LoadAndSavePFM(argv[1], argv[2]); //Loads and saves a PFM file
 //	LoadPPMAndSavePFM(argv[1], argv[2]); //Loads PPM and saves a PFM file
     LoadPFMAndSavePPM(argv[1], argv[2]); //Loads PFM and saves a PPM file
-  }  
-  
+    }  */
+
+    simpleHDR("test.pfm");
+    LoadPFMAndSavePPM("test.pfm", "test.ppm");
  
   return 0;
 }
-
-
