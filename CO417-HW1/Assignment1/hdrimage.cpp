@@ -15,6 +15,7 @@ HDRImage::HDRImage(string path) {
     ImageData<float> F = ImageData<float>::load(s_buf.str());
     fill_n(F.data, F.width * F.height * F.numComponents, 0.0f);
     vector<ImageData<float>> Zi;
+    float F_R, F_G, F_B;
     for (int i = 1; i <= 7; ++i) {
 	stringstream s_str;
 	s_str << path << "/memorial" << i << ".pfm";
@@ -46,9 +47,16 @@ HDRImage::HDRImage(string path) {
 		    F.data[index + 2] += log(Zi_B/div) * weight(Zi_B);
 		    div *= 4;
 		}
-		F.data[index] = exp(F.data[index]/sum_Zi_R);
-		F.data[index + 1] = exp(F.data[index + 1]/sum_Zi_G);
-		F.data[index + 2] = exp(F.data[index + 2]/sum_Zi_B);
+		F_R = exp(F.data[index]/sum_Zi_R);
+		F_G = exp(F.data[index + 1]/sum_Zi_G);
+		F_B = exp(F.data[index + 2]/sum_Zi_B);
+
+		F.data[index] = F_R <= 1.0f ? (F_R >= 0.0f ? F_R : 0.0f) : 1.0f;
+		F.data[index + 1] = F_G <= 1.0f ? (F_G >= 0.0f ? F_G : 0.0f) : 1.0f;
+		F.data[index + 2] = F_B <= 1.0f ? (F_B >= 0.0f ? F_B : 0.0f) : 1.0f;
+	    }
+	    if (i == 85 && j == 189) {
+		cout << "derp:" << F_R << " " << F_G << " " << F_B << endl;
 	    }
 	    
 	}
@@ -60,6 +68,6 @@ HDRImage::HDRImage(string path) {
 }
 
 float HDRImage::weight(float value) {
-//    return (value >= 0.005 && value <= 0.92) ? 2 * (8 * pow(value, 4) - 16 * pow(value, 3) + 8 * pow(value, 2)) : 0.0f;
-    return 2 * (8 * pow(value, 4) - 16 * pow(value, 3) + 8 * pow(value, 2));
+    return (value >= 0.005 && value <= 0.92) ? 2 * (8 * pow(value, 4) - 16 * pow(value, 3) + 8 * pow(value, 2)) : 0.0f;
+//    return 2 * (8 * pow(value, 4) - 16 * pow(value, 3) + 8 * pow(value, 2));
 }
