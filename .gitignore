@@ -12,3 +12,12 @@
 *.la
 *.a
 *~
+
+# VS files
+*.suo
+*.sdf
+*.vcxproj
+*.sln
+*.opensdf
+*.filters
+Debug/
