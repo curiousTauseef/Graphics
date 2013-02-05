@@ -42,25 +42,22 @@ HDRImage::HDRImage(string path) {
 		    sum_Zi_G += weight(Zi_G);
 		    float Zi_B = Zi.at(img -1).data[index + 2];
 		    sum_Zi_B += weight(Zi_B);
-		    F.data[index] += log(Zi_R/div) * weight(Zi_R);
-		    F.data[index + 1] += log(Zi_G/div) * weight(Zi_G);
-		    F.data[index + 2] += log(Zi_B/div) * weight(Zi_B);
-		    div *= 4;
+		    F.data[index] += (Zi_R < 0.005f || Zi_R > 0.92f) ? 0.0f : log(Zi_R/div) * weight(Zi_R);
+		    F.data[index + 1] += (Zi_G < 0.005f || Zi_G > 0.92f) ? 0.0f : log(Zi_G/div) * weight(Zi_G);
+		    F.data[index + 2] += (Zi_B < 0.005f || Zi_B > 0.92f) ? 0.0f : log(Zi_B/div) * weight(Zi_B);
+		    div *= 4.0f;
 		}
-		F_R = exp(F.data[index]/sum_Zi_R);
-		F_G = exp(F.data[index + 1]/sum_Zi_G);
-		F_B = exp(F.data[index + 2]/sum_Zi_B);
+		F_R = (sum_Zi_R == 0.0f) ? 1.0f : exp(F.data[index]/sum_Zi_R);
+		F_G = (sum_Zi_G == 0.0f) ? 1.0f : exp(F.data[index + 1]/sum_Zi_G);
+		F_B = (sum_Zi_B == 0.0f) ? 1.0f : exp(F.data[index + 2]/sum_Zi_B);
 
-		F.data[index] = F_R <= 1.0f ? (F_R >= 0.0f ? F_R : 0.0f) : 1.0f;
-		F.data[index + 1] = F_G <= 1.0f ? (F_G >= 0.0f ? F_G : 0.0f) : 1.0f;
-		F.data[index + 2] = F_B <= 1.0f ? (F_B >= 0.0f ? F_B : 0.0f) : 1.0f;
+		F.data[index] = F_R;
+		F.data[index + 1] = F_G;
+		F.data[index + 2] = F_B;
 	    }
-	    if (i == 85 && j == 189) {
-		cout << "derp:" << F_R << " " << F_G << " " << F_B << endl;
-	    }
-	    
 	}
     }
+    cout << weight(0.5);
     data = F.data;
     width = F.width;
     height = F.height;
@@ -68,6 +65,6 @@ HDRImage::HDRImage(string path) {
 }
 
 float HDRImage::weight(float value) {
-    return (value >= 0.005 && value <= 0.92) ? 2 * (8 * pow(value, 4) - 16 * pow(value, 3) + 8 * pow(value, 2)) : 0.0f;
-//    return 2 * (8 * pow(value, 4) - 16 * pow(value, 3) + 8 * pow(value, 2));
+    float tmp = 4.0f * (value * value - value);
+    return (value < 0.005f || value > 0.92f) ? 0.0f : tmp * tmp;
 }
