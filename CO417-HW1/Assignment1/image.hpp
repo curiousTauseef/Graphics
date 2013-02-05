@@ -229,7 +229,7 @@ public:
 			img_out[index] = static_cast<float>(img.data[index])/255.0f; //R
 			img_out[index + 1] = static_cast<float>(img.data[index + 1])/255.0f;//G
 			img_out[index + 2] = static_cast<float>(img.data[index + 2])/255.0f;//B
-		    }
+			}
 		}
 		
 	    }
