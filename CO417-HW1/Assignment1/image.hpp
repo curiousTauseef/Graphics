@@ -30,7 +30,7 @@ public:
 	    if( fscanf( imgFile, "P%c \n", &type )!= 1 || type< '1' || type> '8')
 	    {
 		fclose( imgFile );
-		return;
+		
 	    }
 	    // skip comments
 	    while( fscanf( imgFile, "#%[^\n]\n", buf ) )
@@ -54,7 +54,7 @@ public:
 	    case '4': // binary bitmap
 		std::cerr << "Bitmaps not implemented\n";
 		fclose( imgFile );
-		return;
+		
 	    case '2': // ASCII greymap
 		imageData= new T[width*height*3];
 		for( i= 0 ; i< height ; i++ )
@@ -210,13 +210,13 @@ public:
     static ImageData<T1> convert(ImageData<T> img) {
 	ImageData<T1> ret;
 	T1 *img_out = new T1[img.width*img.height*img.numComponents];
-	for ( uint i = 0 ; i < img.height ; ++i ) // height
+	for ( int i = 0 ; i < img.height ; ++i ) // height
 	{
-	    for ( uint j = 0 ; j < img.width ; ++j ) // width
+	    for ( int j = 0 ; j < img.width ; ++j ) // width
 	    {
-		for ( uint k = 0 ; k < img.numComponents ; ++k ) // color channels - 3 for RGB images
+		for ( int k = 0 ; k < img.numComponents ; ++k ) // color channels - 3 for RGB images
 		{
-		    uint index = i*img.width*img.numComponents + j*img.numComponents + k; //index within the image
+		    int index = i*img.width*img.numComponents + j*img.numComponents + k; //index within the image
 		    if (std::is_same<T1, unsigned char>::value) {
 			//typecast 0.0f -> 1.0f values to the 0 - 255 range 
 			img_out[index] = static_cast<unsigned char>(img.data[index]*255.0f); //R
@@ -229,7 +229,7 @@ public:
 			img_out[index] = static_cast<float>(img.data[index])/255.0f; //R
 			img_out[index + 1] = static_cast<float>(img.data[index + 1])/255.0f;//G
 			img_out[index + 2] = static_cast<float>(img.data[index + 2])/255.0f;//B
-		    }
+			}
 		}
 		
 	    }

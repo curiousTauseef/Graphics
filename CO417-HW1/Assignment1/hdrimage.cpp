@@ -28,9 +28,9 @@ HDRImage::HDRImage(string path) {
     {
 	for ( int j = 0 ; j < F.width ; ++j ) // width
 	{
-	    for ( int k = 0 ; k < F.numComponents ; ++k ) // color channels - 3 for RGB images
-	    {
-		int index = i*F.width*F.numComponents + j*F.numComponents + k; //index within the image
+	    //for ( int k = 0 ; k < F.numComponents ; ++k ) // color channels - 3 for RGB images
+	    //{
+		int index = i*F.width*F.numComponents + j*F.numComponents ; //index within the image
 		float sum_Zi_R = 0.0f;
 		float sum_Zi_G = 0.0f;
 		float sum_Zi_B = 0.0f;
@@ -54,7 +54,7 @@ HDRImage::HDRImage(string path) {
 		F.data[index] = F_R;
 		F.data[index + 1] = F_G;
 		F.data[index + 2] = F_B;
-	    }
+	    //}
 	}
     }
     cout << weight(0.5);
