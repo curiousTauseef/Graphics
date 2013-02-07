@@ -68,3 +68,19 @@ float HDRImage::weight(float value) {
     float tmp = 4.0f * (value * value - value);
     return (value < 0.005f || value > 0.92f) ? 0.0f : tmp * tmp;
 }
+
+void HDRImage::tonMapping(HDRImage img, int stops, float gamma) {
+	for ( int i = 0 ; i < img.height ; ++i ) // height
+	{
+	    for ( int j = 0 ; j < img.width ; ++j ) // width
+	    {
+			int index = i*img.width*img.numComponents + j*img.numComponents; //index within the image
+			float n_R = (img.data[index] * pow(2.0,stops) > 1.0) ? 1.0 : img.data[index] * pow(2,stops) ;
+			float n_G = (img.data[index + 1] * pow(2.0,stops) > 1.0) ? 1.0 : img.data[index + 1] * pow(2,stops) ;
+			float n_B = (img.data[index + 2] * pow(2.0,stops) > 1.0) ? 1.0 : img.data[index + 2] * pow(2,stops) ;
+			img.data[index] = pow(n_R,1/gamma);
+			img.data[index + 1] = pow(n_G, 1/gamma);
+			img.data[index + 2] = pow(n_B, 1/gamma);
+		}
+	 }
+}
