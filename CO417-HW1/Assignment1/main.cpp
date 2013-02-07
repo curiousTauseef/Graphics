@@ -9,8 +9,8 @@ int main(int agrc, char** argv) {
     
     t_map.save("derp");
 	// exposure
-	int stops = 9;
-	float gamma = 2.2;
+	int stops = 7;
+	float gamma = 2.0;
 	for ( int i = 0 ; i < h.height ; ++i ) // height
 	{
 	    for ( int j = 0 ; j < h.width ; ++j ) // width
@@ -27,5 +27,8 @@ int main(int agrc, char** argv) {
 
 	
 	h.save("derp_exp");
+	ImageData<unsigned char> t_map_exp = ImageData<float>::convert<unsigned char>(h);
+    
+    t_map_exp.save("derp_exp");
     return 0;
 }
