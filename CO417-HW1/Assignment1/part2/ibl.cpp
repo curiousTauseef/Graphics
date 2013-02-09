@@ -18,7 +18,7 @@ IBL::IBL(ImageData<float> &latlong, Sphere &sphere) {
 	for (int j = 0; j < sphere.diameter; ++j) {
 	    int index_s = i*sphere.diameter*3 + j*3;
 	    theta = acos(sphere.normals[index_s + 1]);
-	    phi = 2 * (atan2(sphere.normals[index_s], sphere.normals[index_s + 2]) + M_PI/2);
+	    phi = atan2(sphere.normals[index_s + 2], sphere.normals[index_s]) + M_PI;
 	    int index_l = floor((theta/M_PI) * latlong.height) * latlong.width * 3 + floor((phi/(2 * M_PI)) * latlong.width) * 3;
 	    float dot_p = dot(v, sphere.normals + index_s);
 	    r[index_s] = (2 * dot_p * sphere.normals[index_s] - v[0]);
