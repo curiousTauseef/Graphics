@@ -214,9 +214,9 @@ public:
 	{
 	    for ( int j = 0 ; j < img.width ; ++j ) // width
 	    {
-		for ( int k = 0 ; k < img.numComponents ; ++k ) // color channels - 3 for RGB images
-		{
-		    int index = i*img.width*img.numComponents + j*img.numComponents + k; //index within the image
+		//for ( int k = 0 ; k < img.numComponents ; ++k ) // color channels - 3 for RGB images
+		//{
+		    int index = i*img.width*img.numComponents + j*img.numComponents; //index within the image
 		    if (std::is_same<T1, unsigned char>::value) {
 			//typecast 0.0f -> 1.0f values to the 0 - 255 range 
 			img_out[index] = static_cast<unsigned char>(img.data[index]*255.0f); //R
@@ -230,7 +230,7 @@ public:
 			img_out[index + 1] = static_cast<float>(img.data[index + 1])/255.0f;//G
 			img_out[index + 2] = static_cast<float>(img.data[index + 2])/255.0f;//B
 			}
-		}
+		//}
 		
 	    }
 	}
