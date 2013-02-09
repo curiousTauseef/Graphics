@@ -1,3 +1,4 @@
+#include <cmath>
 #include "image.hpp"
 #include "hdrimage.hpp"
 
