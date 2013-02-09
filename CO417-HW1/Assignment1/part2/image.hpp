@@ -216,7 +216,7 @@ public:
 	    {
 		for ( int k = 0 ; k < img.numComponents ; ++k ) // color channels - 3 for RGB images
 		{
-		    int index = i*img.width*img.numComponents + j*img.numComponents + k; //index within the image
+		    int index = i*img.width*img.numComponents + j*img.numComponents; //index within the image
 		    if (std::is_same<T1, unsigned char>::value) {
 			//typecast 0.0f -> 1.0f values to the 0 - 255 range 
 			img_out[index] = static_cast<unsigned char>(img.data[index]*255.0f); //R
