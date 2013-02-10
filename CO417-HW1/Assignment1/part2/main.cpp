@@ -10,6 +10,7 @@ int main(int argc, char** argv) {
     ImageData<float> ll = ImageData<float>::load("../../GraceCathedral/grace_latlong.pfm");
     IBL test(ll, s); 
     ImageData<float> *normals = new ImageData<float>(s.diameter, s.diameter, 3, s.normals);
+//    IBL::tonMapping(test.ibl);
     normals->save("normals");
     (test.reflection)->save("reflection");
     (test.ibl)->save("ibl");

@@ -9,6 +9,8 @@ public:
 
     IBL(ImageData<float> &latlong, Sphere &sphere);
 
+    static void tonMapping(ImageData<float>* img);
+    
     ImageData<float> *ibl;
     ImageData<float> *reflection;
 

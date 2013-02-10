@@ -248,7 +248,7 @@ public:
 	this->height = height;
 	this->numComponents = numComponents;
 	this->data = data;
-	
+
     }
 
 //protected:
