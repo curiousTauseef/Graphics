@@ -16,6 +16,8 @@ HDRImage::HDRImage(string path) {
     fill_n(F.data, F.width * F.height * F.numComponents, 0.0f);
     vector<ImageData<float>> Zi;
     float F_R, F_G, F_B;
+    float brightest = 0.0f;
+    float dimmest = 1.0f;
     for (int i = 1; i <= 7; ++i) {
 	stringstream s_str;
 	s_str << path << "/memorial" << i << ".pfm";
@@ -54,10 +56,15 @@ HDRImage::HDRImage(string path) {
 		F.data[index] = F_R;
 		F.data[index + 1] = F_G;
 		F.data[index + 2] = F_B;
+		float av = (F_R + F_G + F_B)/3;
+		if (av != 0 && av <= dimmest)
+		    dimmest = av;
+		if (av >= brightest)
+		    brightest = av;
 	    //}
 	}
     }
-    cout << weight(0.5);
+    cout << brightest/dimmest << endl;
     data = F.data;
     width = F.width;
     height = F.height;
